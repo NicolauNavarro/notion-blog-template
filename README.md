@@ -29,7 +29,7 @@ Publish posts by adding them in your Notion workspace—no backend needed.
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/yourusername/notion-blog-template.git
+git clone https://github.com/NicolauNavarro/notion-blog-template.git
 cd notion-blog-template
 ```
 
@@ -77,9 +77,19 @@ Deploy instantly on Vercel using the button below:
 
 ## How to publish posts
 
-1. Add a new row to your Notion database
-2. Fill in **Title**, **Slug**, **Date**, and check **Published** when ready
+1. Add a new row to your Notion database  
+2. Fill in **Title**, **Slug**, **Date**, and check **Published** when ready  
 3. Your post will appear on the blog homepage after refreshing
+
+---
+
+## Notion Database Template
+
+To get started quickly, **duplicate this Notion database template** for your blog posts:
+
+[📋 Duplicate Notion Blog Database Template](https://www.notion.so/your-notion-template-link)
+
+This template includes all required fields like **Title**, **Slug**, **Published**, **Date**, **Tags**, and **Excerpt** already set up.
 
 ---
 
