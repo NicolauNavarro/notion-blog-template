@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+# notion-blog-template
+
+A clean, fully functional **Next.js blog starter** powered by **Notion API**.
+Publish posts by adding them in your Notion workspace—no backend needed.
+
+---
+
+## Features
+
+* Fetch and render blog posts directly from a Notion database
+* Dynamic routing with friendly URLs based on post slugs
+* Responsive, mobile-friendly design using Tailwind CSS
+* Basic SEO with meta tags
+* Easy setup with environment variables
+* Ready to deploy on Vercel with a single click
+* Supports draft/publish workflow with scheduled release dates
+
+---
+
+## Demo
+
+\[Live demo link – add yours after deploying]
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/yourusername/notion-blog-template.git
+cd notion-blog-template
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3. Setup Notion integration
+
+* Create a Notion integration and share your blog database with it
+* Copy the **integration token** and **database ID**
+
+### 4. Configure environment variables
+
+Create a `.env.local` file in the root:
+
+```env
+NOTION_TOKEN=your_notion_integration_token
+NOTION_DATABASE_ID=your_database_id
+```
+
+### 5. Run development server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see your blog.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
+Deploy instantly on Vercel using the button below:
 
-To learn more about Next.js, take a look at the following resources:
+[![Deploy on Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/notion-blog-template)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## How to publish posts
 
-## Deploy on Vercel
+1. Add a new row to your Notion database
+2. Fill in **Title**, **Slug**, **Date**, and check **Published** when ready
+3. Your post will appear on the blog homepage after refreshing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+MIT © Your Name
+
+---
+
+## Want help?
+
+Open an issue or DM me on Twitter \[@yourhandle].
+
+---
+
+---
+
+**You’re set.** Once you have your repo done, ping me—I’ll help you with outreach messages and your next project.
