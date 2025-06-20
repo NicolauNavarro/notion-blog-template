@@ -107,4 +107,3 @@ Open an issue or DM me on Twitter \[@yourhandle].
 
 ---
 
-**You’re set.** Once you have your repo done, ping me—I’ll help you with outreach messages and your next project.
