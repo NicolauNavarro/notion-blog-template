@@ -39,7 +39,10 @@ export async function queryPosts() {
     ],
   });
 
-  const posts = response.results.filter(isFullPageObject).map((post) => {
+  const fullPages = response.results.filter(isFullPageObject);
+  await updateMissingSlugs(fullPages);
+
+  const posts = fullPages.map((post) => {
     const titleProperty = post.properties.Title;
     const tagsProperty = post.properties.Tags;
     const dateProperty = post.properties.Date;
@@ -65,7 +68,8 @@ export async function queryPosts() {
 
     const slug =
       slugProperty.type === "rich_text"
-        ? slugProperty.rich_text[0]?.plain_text || ""
+        ? slugProperty.rich_text[0]?.plain_text ||
+          title.toLowerCase().replace(/\s+/g, "-")
         : "";
 
     const excerpt =
@@ -121,4 +125,41 @@ function formatDate(date: string) {
   ];
   const month = months[newDate.getMonth()];
   return `${day} ${month} ${year}`;
+}
+
+async function updateMissingSlugs(pages: PageObjectResponse[]) {
+  for (const page of pages) {
+    const slugProperty = page.properties.Slug;
+    const titleProperty = page.properties.Title;
+
+    const hasSlug =
+      slugProperty.type === "rich_text" &&
+      slugProperty.rich_text.length > 0 &&
+      !!slugProperty.rich_text[0].plain_text;
+
+    const title =
+      titleProperty.type === "title"
+        ? titleProperty.title[0]?.plain_text || ""
+        : "";
+
+    if (!hasSlug && title) {
+      const generatedSlug = title.toLowerCase().replace(/\s+/g, "-");
+
+      await notion.pages.update({
+        page_id: page.id,
+        properties: {
+          Slug: {
+            rich_text: [
+              {
+                type: "text",
+                text: {
+                  content: generatedSlug,
+                },
+              },
+            ],
+          },
+        },
+      });
+    }
+  }
 }
