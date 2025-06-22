@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { queryPosts } from "@/actions/posts";
 import Link from "next/link";
 
