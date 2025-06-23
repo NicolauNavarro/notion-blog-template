@@ -34,7 +34,7 @@ const componentMap: Record<string, React.FC<{ children: React.ReactNode }>> = {
 };
 
 const tagColorMap: Record<string, string> = {
-  gray: "bg-gray-200",
+  gray: "bg-neutral-300",
   brown: "bg-amber-100",
   orange: "bg-orange-100 ",
   yellow: "bg-yellow-100",
@@ -43,7 +43,7 @@ const tagColorMap: Record<string, string> = {
   purple: "bg-purple-100 ",
   pink: "bg-pink-100 ",
   red: "bg-red-100 ",
-  default: "bg-neutral-300 ",
+  default: "bg-gray-200",
 };
 
 interface PageProps {
