@@ -52,7 +52,9 @@ interface BlogPostPageProps {
   };
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
+export default async function BlogPostPage(props: BlogPostPageProps) {
+  const { params } = props;
+
   const post = await getPostBySlug(params.slug);
   if (!post) {
     notFound();
