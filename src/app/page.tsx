@@ -5,7 +5,6 @@ import Link from "next/link";
 
 export default async function Home() {
   const posts = await queryPosts();
-  console.log(posts);
   return (
     <>
       <main className="overflow-hidden flex flex-col justify-center w-1/3 border-b-2 border-gray-200 pb-8">

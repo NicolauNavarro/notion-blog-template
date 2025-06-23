@@ -2,9 +2,18 @@ export const dynamic = "force-dynamic";
 
 import { getPageContent } from "@/actions/posts";
 
+import Heading_1 from "@/components/blocks/Heading_1";
+import Heading_2 from "@/components/blocks/Heading_2";
+import Paragraph from "@/components/blocks/Paragraph";
+
+const componentMap: Record<string, React.ElementType> = {
+  Heading_1,
+  Heading_2,
+  Paragraph,
+};
+
 export default async function Example() {
-  const res = await getPageContent("hello-world");
-  console.log(res);
+  const groupedSections = await getPageContent("regeneracion-ajolotes");
   return (
     <>
       <main className="overflow-hidden flex flex-col justify-center w-1/3 border-b-2 border-gray-200 pb-8">
@@ -50,40 +59,22 @@ export default async function Example() {
         </p>
       </main>
 
-      <section className=" overflow-hidden flex flex-col justify-center gap-4 w-1/3">
-        <h2 className="text-2xl font-medium">The process</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
-          nesciunt consectetur aspernatur natus sunt magnam eos, eum blanditiis
-          maxime dolor ipsa voluptatem quia explicabo architecto error, esse
-          cupiditate? Atque, quidem?
-        </p>
-      </section>
+      {groupedSections?.map((section, idx) => (
+        <section
+          key={idx}
+          className=" overflow-hidden flex flex-col justify-center gap-4 w-1/3"
+        >
+          {section.map((block) => {
+            const BlockComponent = componentMap[block.type];
+            if (!BlockComponent) return null;
 
-      <section className=" overflow-hidden flex flex-col justify-center gap-4 w-1/3">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
-          nesciunt consectetur aspernatur natus sunt magnam eos, eum blanditiis
-          maxime dolor ipsa voluptatem quia explicabo architecto error, esse
-          cupiditate? Atque, quidem?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. In temporibus
-          neque nihil animi at voluptatibus alias minima obcaecati! Hic numquam
-          laboriosam incidunt id assumenda quia error magnam eum nihil iusto.
-        </p>
-      </section>
+            return (
+              <BlockComponent key={block.id}>{block.content}</BlockComponent>
+            );
+          })}
+        </section>
+      ))}
 
-      <section className=" overflow-hidden flex flex-col justify-center gap-4 w-1/3">
-        <h2 className="text-2xl font-medium">My honest conclusion</h2>
-
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
-          nesciunt consectetur aspernatur natus sunt magnam eos, eum blanditiis
-          maxime dolor ipsa voluptatem quia explicabo architecto error, esse
-          cupiditate? Atque, quidem?
-        </p>
-      </section>
     </>
   );
 }

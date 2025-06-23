@@ -1,5 +1,8 @@
 "use server";
-import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import {
+  PageObjectResponse,
+  BlockObjectResponse,
+} from "@notionhq/client/build/src/api-endpoints";
 import { Client } from "@notionhq/client";
 
 const notion = new Client({ auth: process.env.NOTION_TOKEN });
@@ -51,6 +54,8 @@ export async function queryPosts() {
     const publishedProperty = post.properties.Published;
     const coverImageProperty = post.properties["Cover Image"];
 
+    const id = post.id;
+
     const title =
       titleProperty.type === "title"
         ? titleProperty.title[0]?.plain_text || ""
@@ -92,6 +97,7 @@ export async function queryPosts() {
         : "";
 
     return {
+      id,
       title,
       tags,
       date,
@@ -162,4 +168,142 @@ async function updateMissingSlugs(pages: PageObjectResponse[]) {
       });
     }
   }
+}
+
+export async function getPageContent(slug: string) {
+  const posts = await queryPosts();
+  const post = posts.find((post) => post.slug === slug);
+
+  if (!post) return null;
+
+  const response = await notion.blocks.children.list({
+    block_id: post.id,
+  });
+
+  const blocks = response.results
+    .map((block) => {
+      if (!("type" in block)) return null;
+
+      const id = block.id;
+      const type = block.type;
+      let content = "";
+
+      switch (type) {
+        case "paragraph": {
+          const b = block as Extract<
+            BlockObjectResponse,
+            { type: "paragraph" }
+          >;
+          content = b.paragraph.rich_text.map((t) => t.plain_text).join("");
+          break;
+        }
+        case "heading_1": {
+          const b = block as Extract<
+            BlockObjectResponse,
+            { type: "heading_1" }
+          >;
+          content = b.heading_1.rich_text.map((t) => t.plain_text).join("");
+          break;
+        }
+        case "heading_2": {
+          const b = block as Extract<
+            BlockObjectResponse,
+            { type: "heading_2" }
+          >;
+          content = b.heading_2.rich_text.map((t) => t.plain_text).join("");
+          break;
+        }
+        case "heading_3": {
+          const b = block as Extract<
+            BlockObjectResponse,
+            { type: "heading_3" }
+          >;
+          content = b.heading_3.rich_text.map((t) => t.plain_text).join("");
+          break;
+        }
+        case "bulleted_list_item": {
+          const b = block as Extract<
+            BlockObjectResponse,
+            { type: "bulleted_list_item" }
+          >;
+          content = b.bulleted_list_item.rich_text
+            .map((t) => t.plain_text)
+            .join("");
+          break;
+        }
+        case "numbered_list_item": {
+          const b = block as Extract<
+            BlockObjectResponse,
+            { type: "numbered_list_item" }
+          >;
+          content = b.numbered_list_item.rich_text
+            .map((t) => t.plain_text)
+            .join("");
+          break;
+        }
+        case "code": {
+          const b = block as Extract<BlockObjectResponse, { type: "code" }>;
+          content = b.code.rich_text.map((t) => t.plain_text).join("");
+          break;
+        }
+        case "image": {
+          const b = block as Extract<BlockObjectResponse, { type: "image" }>;
+          content =
+            b.image.type === "file"
+              ? b.image.file.url
+              : b.image.type === "external"
+              ? b.image.external.url
+              : "";
+          break;
+        }
+        default:
+          content = "";
+      }
+
+      return {
+        id,
+        type: type.charAt(0).toUpperCase() + type.slice(1),
+        content,
+      };
+    })
+    .filter(Boolean) as { id: string; type: string; content: string }[];
+
+  return groupBlocksIntoSections(blocks);
+
+}
+
+
+function groupBlocksIntoSections(blocks: {
+  id: string;
+  type: string;
+  content: string;
+}[]) {
+  const sections: {
+    id: string;
+    type: string;
+    content: string;
+  }[][] = [];
+
+  let current: {
+    id: string;
+    type: string;
+    content: string;
+  }[] = [];
+
+  for (const block of blocks) {
+    if (block.type.toLowerCase() === "divider") {
+      if (current.length > 0) {
+        sections.push(current);
+        current = [];
+      }
+    } else {
+      current.push(block);
+    }
+  }
+
+  if (current.length > 0) {
+    sections.push(current);
+  }
+
+  return sections;
 }
