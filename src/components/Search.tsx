@@ -1,9 +1,3 @@
-
-
-export default function Search(){
-    return(
-        <div>
-
-        </div>
-    )
+export default function Search() {
+  return <div></div>;
 }

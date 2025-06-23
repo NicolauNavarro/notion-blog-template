@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
-html {
+html,
+body {
   scroll-behavior: smooth;
+  overscroll-behavior: none;
 }
 
 body {
