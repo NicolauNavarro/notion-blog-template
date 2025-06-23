@@ -46,20 +46,17 @@ const tagColorMap: Record<string, string> = {
   default: "bg-neutral-300 ",
 };
 
-interface BlogPostPageProps {
-  params: {
-    slug: string;
-  };
+interface PageProps {
+  params: Promise<{ slug: string }>;
 }
 
-export default async function BlogPostPage(props: BlogPostPageProps) {
-  const { params } = props;
+export default async function BlogPostPage({ params }: PageProps) {
+  const resolvedParams = await params;
+  const post = await getPostBySlug(resolvedParams.slug);
 
-  const post = await getPostBySlug(params.slug);
-  if (!post) {
-    notFound();
-  }
+  if (!post) notFound();
   const groupedSections = await getPageContent(post.id);
+
   console.log(groupedSections);
   return (
     <>
