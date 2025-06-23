@@ -46,11 +46,13 @@ const tagColorMap: Record<string, string> = {
   default: "bg-neutral-300 ",
 };
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+interface BlogPostPageProps {
+  params: {
+    slug: string;
+  };
+}
+
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const post = await getPostBySlug(params.slug);
   if (!post) {
     notFound();
