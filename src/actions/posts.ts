@@ -63,7 +63,10 @@ export async function queryPosts() {
 
     const tags =
       tagsProperty.type === "multi_select"
-        ? tagsProperty.multi_select.map((tag) => tag.name)
+        ? tagsProperty.multi_select.map((tag) => ({
+            name: tag.name,
+            color: tag.color,
+          }))
         : [];
 
     const date =
@@ -170,14 +173,11 @@ async function updateMissingSlugs(pages: PageObjectResponse[]) {
   }
 }
 
-export async function getPageContent(slug: string) {
-  const posts = await queryPosts();
-  const post = posts.find((post) => post.slug === slug);
-
-  if (!post) return null;
+export async function getPageContent(postId: string) {
+  if (!postId) return null;
 
   const response = await notion.blocks.children.list({
-    block_id: post.id,
+    block_id: postId,
   });
 
   const blocks = response.results
@@ -269,15 +269,15 @@ export async function getPageContent(slug: string) {
     .filter(Boolean) as { id: string; type: string; content: string }[];
 
   return groupBlocksIntoSections(blocks);
-
 }
 
-
-function groupBlocksIntoSections(blocks: {
-  id: string;
-  type: string;
-  content: string;
-}[]) {
+function groupBlocksIntoSections(
+  blocks: {
+    id: string;
+    type: string;
+    content: string;
+  }[]
+) {
   const sections: {
     id: string;
     type: string;
@@ -306,4 +306,10 @@ function groupBlocksIntoSections(blocks: {
   }
 
   return sections;
+}
+
+export async function getPostBySlug(slug: string) {
+  const posts = await queryPosts();
+  const post = posts.find((post) => post.slug === slug);
+  return post;
 }

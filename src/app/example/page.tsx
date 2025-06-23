@@ -1,15 +1,11 @@
 export const dynamic = "force-dynamic";
 
-import { getPageContent } from "@/actions/posts";
-
 export default async function Example() {
-  const res = await getPageContent("hello-world");
-  console.log(res);
   return (
     <>
       <main className="overflow-hidden flex flex-col justify-center w-1/3 border-b-2 border-gray-200 pb-8">
         <p className="text-gray-600">2 Jan 2025</p>
-        <h1 className="text-4xl leading-loose font-semibold">
+        <h1 className="text-4xl font-semibold py-4">
           My Notion Blog Template
         </h1>
         <div className="w-full flex items-center gap-4 flex-wrap">
