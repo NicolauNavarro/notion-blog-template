@@ -19,4 +19,15 @@ body {
   padding-block: 200px;
 }
 
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* font-family: var(--font-jetbrains-mono), monospace; */
