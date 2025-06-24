@@ -57,10 +57,9 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (!post) notFound();
   const groupedSections = await getPageContent(post.id);
 
-  console.log(groupedSections);
   return (
     <>
-      <main className="prose prose-neutral max-w-prose mx-auto px-4 overflow-hidden flex flex-col justify-center border-b-2 border-gray-200 pb-8">
+      <main className="prose prose-neutral max-w-prose mx-auto w-full px-4 overflow-hidden flex flex-col justify-center border-b-2 border-gray-200 pb-8">
         <p className="text-gray-600">{post.date}</p>
         <h1 className="text-4xl font-semibold py-4">{post.title}</h1>
         <div className="w-full flex items-center gap-4 flex-wrap select-none">
@@ -84,7 +83,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       {groupedSections?.map((section, idx) => (
         <section
           key={idx}
-          className="prose prose-neutral max-w-prose mx-auto px-4 overflow-hidden flex flex-col justify-center gap-4"
+          className="prose prose-neutral max-w-prose mx-auto w-full px-4 overflow-hidden flex flex-col justify-center gap-4"
         >
           {section.map((block) => {
             const BlockComponent = componentMap[block.type];

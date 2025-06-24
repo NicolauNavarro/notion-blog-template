@@ -7,7 +7,7 @@ export default async function Home() {
   const posts = await queryPosts();
   return (
     <>
-      <main className="prose prose-neutral max-w-prose mx-auto px-4 overflow-hidden flex flex-col justify-center border-b-2 border-gray-200 pb-8">
+      <main className="prose prose-neutral max-w-prose mx-auto w-full px-4 overflow-hidden flex flex-col justify-center border-b-2 border-gray-200 pb-8">
         <p className="text-gray-600">Nicolau Navarro Arroyo</p>
         <h1 className="text-4xl font-semibold py-4">My Notion Blog Template</h1>
         <p className="mt-4 text-gray-600">
@@ -22,7 +22,7 @@ export default async function Home() {
         <Link
           key={post.slug}
           href={`/${post.slug}`}
-          className="prose prose-neutral max-w-prose mx-auto overflow-hidden flex flex-col justify-center gap-4 rounded-xl p-4 hover:bg-gray-100 transition-colors relative"
+          className="prose prose-neutral max-w-prose mx-auto w-full overflow-hidden flex flex-col justify-center gap-4 rounded-xl p-4 hover:bg-gray-100 transition-colors relative"
         >
           <p className="text-sm text-gray-600 md:absolute right-4 top-4 h-4 flex items-center">
             {post.date}
