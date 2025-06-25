@@ -36,7 +36,7 @@ export default function SearchWrapper({ posts }: { posts: Post[] }) {
       />
 
       {open && (
-        <div className="fixed left-0 top-0 inset-0 z-50 flex items-start md:items-center justify-center p-4 h-screen">
+        <div className="fixed left-0 top-0 inset-0 z-50 flex items-start md:items-center justify-center  h-screen">
           <div
             ref={modalRef}
             className="bg-white p-4 rounded-xl shadow-xl max-w-3xl w-full h-[50vh] flex items-center flex-col overflow-hidden "
