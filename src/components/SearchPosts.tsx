@@ -49,7 +49,7 @@ export default function SearchPosts({ posts, onClose }: SearchPostsProps) {
           <Link
             href={post.slug}
             key={post.slug}
-            className="w-full p-4 flex flex-col justify-center rounded-xl hover:bg-gray-100 transition-colors relative"
+            className="w-full p-4 flex flex-col justify-center rounded-xl hover:bg-gray-100 transition-colors relative active:bg-gray-100 "
             onClick={onClose}
           >
             <p>{post.title}</p>

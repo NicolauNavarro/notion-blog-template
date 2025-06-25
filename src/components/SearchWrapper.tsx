@@ -29,14 +29,14 @@ export default function SearchWrapper({ posts }: { posts: Post[] }) {
   }, [open]);
 
   return (
-    <div>
+    <>
       <IoSearchOutline
         onClick={() => setOpen(true)}
         className="text-gray-600 text-xl font-extrabold cursor-pointer"
       />
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center flex-col">
+        <div className="fixed left-0 top-0 inset-0 z-50 flex items-start md:items-center justify-center p-4 h-screen">
           <div
             ref={modalRef}
             className="bg-white p-4 rounded-xl shadow-xl max-w-3xl w-full h-[50vh] flex items-center flex-col overflow-hidden "
@@ -45,6 +45,6 @@ export default function SearchWrapper({ posts }: { posts: Post[] }) {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
